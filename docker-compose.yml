@@ -1,29 +1,33 @@
-version: "3.8"
+version: "3"
 
 services:
-  db:
-    image: postgres
-    container_name: innotter_test_docker_db
-    restart: always
+  app:
+    build:
+      context: ./
+      dockerfile: Dockerfile
     volumes:
-      - ./data/db:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_DB=${POSTGRES_DB}
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - .:/app
     ports:
-      - '${POSTGRES_PORTS}'
-
-  web:
-    build: .
-    command: gunicorn innotter_test.wsgi:application --bind ${WEB_SERVER}
-    volumes:
-      - .:/code
-    ports:
-      - '${WEB_PORTS}'
+      - "8000:8000"
     environment:
-      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_NAME=${POSTGRES_DB}
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     depends_on:
       - db
+  db:
+    container_name: postgres_db
+    image: postgres
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      PGDATA: /data/postgres
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - "${POSTGRES_PORTS}"
+    restart: unless-stopped
+
+volumes:
+    postgres:

@@ -1,10 +1,31 @@
-FROM python:3.10-alpine
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
-WORKDIR /code
-RUN apk update \
-    && apk add postgresql-dev gcc python3-dev musl-dev
-RUN pip install --upgrade pip
-COPY requirements.txt /code/
-RUN pip install -r requirements.txt
-COPY . /code/
+FROM python:3.10
+
+ENV PYTHONFAULTHANDLER=1 \
+  PYTHONUNBUFFERED=1 \
+  PYTHONHASHSEED=random \
+  PIP_NO_CACHE_DIR=off \
+  PIP_DISABLE_PIP_VERSION_CHECK=on \
+  PIP_DEFAULT_TIMEOUT=100 \
+  POETRY_VERSION=1.0.0
+
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends build-essential libpq-dev
+
+RUN apt install -y netcat
+# System deps:
+RUN pip install "poetry==$POETRY_VERSION"
+
+# Copy only requirements to cache them in docker layer
+WORKDIR app/
+COPY poetry.lock pyproject.toml ./
+
+# Project initialization:
+RUN poetry config virtualenvs.create false \
+  && poetry install --no-interaction --no-ansi
+
+# Creating folders, and files for a project:
+ADD entrypoint.sh /entrypoint.sh
+RUN chmod a+x /entrypoint.sh
+COPY . app/
+ENTRYPOINT ["/entrypoint.sh"]
+
