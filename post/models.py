@@ -5,6 +5,7 @@ from page.models import Page
 
 
 class Post(models.Model):
+    uuid = models.CharField(primary_key=True, max_length=30, unique=True, default="", editable=False)
     page = models.ForeignKey(Page, on_delete=models.CASCADE, related_name='posts')
     content = models.CharField(max_length=180)
 
