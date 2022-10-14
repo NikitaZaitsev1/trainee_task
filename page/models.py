@@ -1,10 +1,12 @@
+from uuid import uuid4
+
 from django.db import models
 
 from innotter import settings
 
 
 class Tag(models.Model):
-    uuid = models.CharField(primary_key=True, max_length=30, unique=True, default="", editable=False)
+    uuid = models.CharField(primary_key=True, max_length=30, unique=True, default=uuid4, editable=False)
     name = models.CharField(max_length=30, unique=True)
 
     class Meta:
@@ -18,7 +20,7 @@ class Tag(models.Model):
 
 class Page(models.Model):
     name = models.CharField(max_length=80)
-    uuid = models.CharField(primary_key=True, max_length=30, unique=True, default="", editable=False)
+    uuid = models.CharField(primary_key=True, max_length=30, unique=True, default=uuid4, editable=False)
     description = models.TextField()
     tags = models.ManyToManyField(Tag, related_name='pages')
 
