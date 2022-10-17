@@ -6,7 +6,7 @@ from page.models import Page, Tag
 class TagSerializer(ModelSerializer):
     class Meta:
         model = Tag
-        fields = ('name',)
+        fields = ('uuid','name')
 
 
 class PageSerializer(ModelSerializer):
