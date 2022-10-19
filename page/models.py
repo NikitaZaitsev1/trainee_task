@@ -23,16 +23,13 @@ class Page(models.Model):
     uuid = models.CharField(primary_key=True, max_length=255, unique=True, default=uuid4, editable=False)
     description = models.TextField()
     tags = models.ManyToManyField(Tag, related_name='pages', blank=True)
-
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='pages')
     followers = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='follows')
-
     image = models.URLField(null=True, blank=True)
-
     is_private = models.BooleanField(default=False)
     follow_requests = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='requests')
-
     unblock_date = models.DateTimeField(null=True, blank=True)
+    is_blocked = models.BooleanField(default=False)
 
     class Meta:
         db_table = "pages"

@@ -1,9 +1,13 @@
 from rest_framework.decorators import action
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAdminUser
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 from page.models import Page, Tag
-from page.serializers.serializers import PageSerializer, TagSerializer
+from page.permissions.page_user_permission import PageUserPermission
+from page.serializers.page_moderator_serializer import PageModeratorSerializer
+from page.serializers.page_serializer import PageSerializer
+from page.serializers.tag_serializer import TagSerializer
 from user.models import User
 
 
@@ -21,7 +25,20 @@ class PageViewSet(ModelViewSet):
         users = User.objects.get(pk=pk)
         return Response({'users': users.title})
 
+    def get_permissions(self):
+        if self.request.method == 'GET':
+            self.permission_classes = (IsAuthenticatedOrReadOnly,)
+        else:
+            self.permission_classes = (PageUserPermission,)
+        return super(PageViewSet, self).get_permissions()
+
+    def get_serializer_class(self):
+        if self.action == 'retrieve' or self.action == 'update' and self.request.user == 'moderator':
+            return PageModeratorSerializer
+        return PageSerializer
+
 
 class TagViewSet(ModelViewSet):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
+    permission_classes = (IsAuthenticatedOrReadOnly,)

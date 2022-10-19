@@ -1,10 +1,25 @@
+from rest_framework.permissions import IsAdminUser, IsAuthenticatedOrReadOnly
 from rest_framework.viewsets import ModelViewSet
 
 from user.models import User
-from user.serializers.serializers import UserSerializer
+from user.permissions import user_admin_permission
+from user.permissions.user_admin_permission import UserAdminPermission
+from user.serializers.admin_serializer import AdminSerializer
+from user.serializers.user_serializer import UserSerializer
 
 
 class UserViewSet(ModelViewSet):
     queryset = User.objects.all()
-    serializer_class = UserSerializer
     lookup_field = 'title'
+
+    def get_serializer_class(self):
+        if self.action == 'retrieve' or self.action == 'update':
+            return AdminSerializer
+        return UserSerializer
+
+    def get_permissions(self):
+        if self.request.method == 'GET':
+            self.permission_classes = (IsAdminUser,)
+        else:
+            self.permission_classes = (UserAdminPermission,)
+        return super(UserViewSet, self).get_permissions()
