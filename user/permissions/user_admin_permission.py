@@ -10,4 +10,4 @@ class UserAdminPermission(BasePermission):
         if request.method in SAFE_METHODS:
             return True
 
-        return request.user.role is Role.admin.name
+        return request.user.role == Role.admin
