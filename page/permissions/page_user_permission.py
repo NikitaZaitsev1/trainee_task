@@ -1,5 +1,7 @@
 from rest_framework.permissions import BasePermission, SAFE_METHODS
 
+from enum_class.role import Role
+
 
 class PageUserPermission(BasePermission):
     """Editing pages is restricted to the owner or admin"""
@@ -7,4 +9,4 @@ class PageUserPermission(BasePermission):
     def has_object_permission(self, request, view, obj):
         if request.method in SAFE_METHODS:
             return True
-        return obj.owner == request.user or request.user.role == 'admin' or request.user.role == 'moderator'
+        return obj.owner == request.user or request.user.role in (Role.admin.name, Role.moderator.name)

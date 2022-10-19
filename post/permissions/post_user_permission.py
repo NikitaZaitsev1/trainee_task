@@ -1,5 +1,7 @@
 from rest_framework.permissions import BasePermission, SAFE_METHODS
 
+from enum_class.role import Role
+
 
 class PostUserPermission(BasePermission):
     """Editing posts is restricted to the owner, admin or moderator"""
@@ -9,6 +11,6 @@ class PostUserPermission(BasePermission):
             return True
 
         if request.method == 'DELETE':
-            return request.user.role == 'admin' or request.user.role == 'moderator'
+            return request.user.role in (Role.admin.name, Role.moderator.name)
 
-        return obj.page.owner == request.user or request.user.role == 'admin'
+        return obj.page.owner == request.user or request.user.role is Role.admin.name
