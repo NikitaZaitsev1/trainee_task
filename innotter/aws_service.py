@@ -1,5 +1,5 @@
 import boto3
-
+from django.core.mail import send_mail
 from innotter import settings
 
 
@@ -21,4 +21,17 @@ class AwsService:
             image,
             settings.AWS_STORAGE_BUCKET_NAME,
             f"/{folder}/{image.name}"
+        )
+
+    @staticmethod
+    def notify_by_mail(user_mail: str) -> int:
+        """Service for sending emails to followers via AWS SES"""
+        subject = 'New post notification'
+        message = 'We notify you that a new post is published'
+        send_mail(
+            subject,
+            message,
+            'pythondevnkta@gmail.com',
+            [user_mail],
+            fail_silently=False,
         )

@@ -24,7 +24,7 @@ RUN poetry config virtualenvs.create false \
   && poetry install --no-interaction --no-ansi
 
 # Creating folders, and files for a project:
-ADD run_server.sh /entrypoint.sh
+ADD run_server.sh /run_server.sh
 ADD run_celery.sh /run_celery.sh
 RUN chmod a+x /run_server.sh /run_celery.sh
 COPY . app/
