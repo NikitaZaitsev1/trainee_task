@@ -7,6 +7,7 @@ services:
       dockerfile: Dockerfile
     volumes:
       - .:/app
+    entrypoint: /run_server.sh
     ports:
       - "${WEB_PORTS}"
     environment:
@@ -15,6 +16,7 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     depends_on:
       - db
+
   db:
     container_name: postgres_db
     image: postgres
@@ -28,5 +30,24 @@ services:
       - "${POSTGRES_PORTS}"
     restart: unless-stopped
 
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:3-management-alpine
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  celery:
+    restart: always
+    build:
+      context: ./
+    volumes:
+      - .:/app
+    entrypoint: /run_celery.sh
+    depends_on:
+      - db
+      - rabbitmq
+      - app
+
 volumes:
-    postgres:
+  postgres:

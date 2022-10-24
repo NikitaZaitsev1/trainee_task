@@ -1,9 +1,8 @@
-from django.contrib.auth.hashers import make_password
 from rest_framework.fields import CharField, ImageField
 from rest_framework.serializers import ModelSerializer
 
 from innotter import settings
-from services.upload_to_s3_user import upload_to_s3
+from innotter.aws_service import AwsService
 from user.models import User
 
 
@@ -13,7 +12,7 @@ class UserSerializer(ModelSerializer):
         required=True,
         style={'input_type': 'password', 'placeholder': 'Password'}
     )
-    image_s3_path = ImageField()
+    image_s3_path = ImageField(required=False)
 
     class Meta:
         model = User
@@ -29,8 +28,7 @@ class UserSerializer(ModelSerializer):
 
         image = validated_data.get('image_s3_path')
         if image is not None:
-            upload_to_s3(image, folder="user")
+            AwsService().upload_to_s3(image, folder="user")
             user.image_s3_path = f"{settings.DEFAULT_AWS_STORAGE_URL}/user/{image.name}"
-
         user.save()
         return user
