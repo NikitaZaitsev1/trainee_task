@@ -3,15 +3,15 @@ from rest_framework.serializers import ModelSerializer
 
 from innotter import settings
 from page.models import Page
-from services.upload_to_s3_user import upload_to_s3
+from services.upload_to_s3 import upload_to_s3
 
 
 class PageSerializer(ModelSerializer):
-    image = ImageField()
+    image = ImageField(required=False)
 
     class Meta:
         model = Page
-        fields = ('uuid', 'name', 'description', 'tags', 'owner', 'image')
+        fields = ('uuid', 'name', 'description', 'tags', 'owner', 'followers', 'image')
 
     def create(self, validated_data):
         page = Page.objects.create(
