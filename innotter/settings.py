@@ -51,7 +51,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    # 'innotter.middleware.MiddlewareAuthenticationJWT',
+    'innotter.middleware.MiddlewareAuthenticationJWT',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -150,4 +150,4 @@ AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
 AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME")
 DEFAULT_AWS_STORAGE_URL = os.getenv("DEFAULT_AWS_STORAGE_URL")
 
-CELERY_BROKER_URL = 'amqp://guest:guest@rabbitmq:5672/'
+CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL")
