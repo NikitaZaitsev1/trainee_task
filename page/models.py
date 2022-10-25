@@ -36,5 +36,12 @@ class Page(models.Model):
         verbose_name = "Page"
         verbose_name_plural = "Pages"
 
+    @staticmethod
+    def get_emails(page_id) -> list:
+        """Service for getting emails of followers"""
+        page = Page.objects.get(pk=page_id)
+        emails = page.followers.values_list('email', flat=True)
+        return list(emails)
+
     def __str__(self):
         return self.name

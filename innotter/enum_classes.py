@@ -5,9 +5,9 @@ class Role(str, Enum):
     admin = 'admin'
     moderator = 'moderator'
 
-class HttpMethod(str, Enum):
-    get = 'get'
-    retrieve = 'retrieve'
-    update = 'update'
-    delete = 'delete'
 
+class Method(str, Enum):
+    get = 'GET'
+    retrieve = 'retrieve'
+    update = 'UPDATE'
+    delete = 'DELETE'

@@ -1,8 +1,8 @@
 from rest_framework.serializers import ModelSerializer
 
+from page.models import Page
 from post.models import Post
 from post.tasks import send_notification_email
-from user.models import User
 
 
 class PostSerializer(ModelSerializer):
@@ -16,9 +16,8 @@ class PostSerializer(ModelSerializer):
             content=validated_data['content'],
         )
 
-        for follower in post.page.followers.all():
-            for user in User.objects.all():
-                if follower.uuid == user.uuid:
-                    send_notification_email(user.email)
         post.save()
+        send_notification_email.delay(
+            Page.get_emails(post.page.uuid))  # Sending emails to followers via AWS SES using Celery
+
         return post
