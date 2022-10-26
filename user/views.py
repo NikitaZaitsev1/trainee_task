@@ -1,6 +1,7 @@
 from rest_framework.permissions import IsAdminUser, IsAuthenticatedOrReadOnly
 from rest_framework.viewsets import ModelViewSet
 
+from innotter.enum_classes import Method
 from user.models import User
 from user.permissions import user_admin_permission
 from user.permissions.user_admin_permission import UserAdminPermission
@@ -13,12 +14,12 @@ class UserViewSet(ModelViewSet):
     lookup_field = 'title'
 
     def get_serializer_class(self):
-        if self.action == 'retrieve' or self.action == 'update':
+        if self.action == Method.RETRIEVE or self.action == Method.UPDATE:
             return AdminSerializer
         return UserSerializer
 
     def get_permissions(self):
-        if self.request.method == 'GET':
+        if self.request.method == Method.GET:
             self.permission_classes = (IsAdminUser,)
         else:
             self.permission_classes = (UserAdminPermission,)

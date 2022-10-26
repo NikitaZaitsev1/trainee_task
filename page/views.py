@@ -3,6 +3,7 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAdminUser
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
+from innotter.enum_classes import Method, Role
 from page.models import Page, Tag
 from page.permissions.page_user_permission import PageUserPermission
 from page.serializers.page_moderator_serializer import PageModeratorSerializer
@@ -26,14 +27,14 @@ class PageViewSet(ModelViewSet):
         return Response({'users': users.title})
 
     def get_permissions(self):
-        if self.request.method == 'GET':
+        if self.request.method == Method.GET:
             self.permission_classes = (IsAuthenticatedOrReadOnly,)
         else:
             self.permission_classes = (PageUserPermission,)
         return super(PageViewSet, self).get_permissions()
 
     def get_serializer_class(self):
-        if self.action == 'retrieve' or self.action == 'update' and self.request.user == 'moderator':
+        if self.action == Method.RETRIEVE or self.action == Method.UPDATE and self.request.user == Role.moderator:
             return PageModeratorSerializer
         return PageSerializer
 

@@ -1,6 +1,6 @@
 from rest_framework.permissions import BasePermission, SAFE_METHODS
 
-from enum_class.role import Role
+from innotter.enum_classes import Role
 
 
 class PageUserPermission(BasePermission):
