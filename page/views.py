@@ -18,12 +18,12 @@ class PageViewSet(ModelViewSet):
 
     @action(methods=['get'], detail=True)
     def tags(self, request, pk=None):
-        tags = Tag.objects.GET(pk=pk)
+        tags = Tag.objects.get(pk=pk)
         return Response({'tags': tags.name})
 
     @action(methods=['get'], detail=True)
     def users(self, request, pk=None):
-        users = User.objects.GET(pk=pk)
+        users = User.objects.get(pk=pk)
         return Response({'users': users.title})
 
     def get_permissions(self):

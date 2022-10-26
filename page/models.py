@@ -39,7 +39,7 @@ class Page(models.Model):
     @staticmethod
     def get_emails(page_id: uuid) -> list:
         """Service for getting emails of followers"""
-        page = Page.objects.GET(pk=page_id)
+        page = Page.objects.get(pk=page_id)
         emails = page.followers.values_list('email', flat=True)
         return list(emails)
 

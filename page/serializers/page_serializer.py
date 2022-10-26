@@ -20,7 +20,7 @@ class PageSerializer(ModelSerializer):
             owner=validated_data['owner']
         )
 
-        image = validated_data.GET('image')
+        image = validated_data.get('image')
         if image is not None:
             AwsService().upload_to_s3(image, folder="page")
             page.image_s3_path = f"{settings.DEFAULT_AWS_STORAGE_URL}/page/{image.name}"
