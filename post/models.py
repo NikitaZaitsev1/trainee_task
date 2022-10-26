@@ -22,3 +22,21 @@ class Post(models.Model):
         db_table = "posts"
         verbose_name = "Post"
         verbose_name_plural = "Posts"
+
+    def __str__(self):
+        return self.content
+
+
+class Comment(models.Model):
+    uuid = models.CharField(primary_key=True, max_length=255, unique=True, default=uuid4, editable=False)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
+    comment_author = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.SET_NULL)
+    text = models.TextField()
+    date_added = models.DateTimeField(auto_now_add=True)
+    reply_to = models.ForeignKey('Comment', null=True, blank=True, related_name='replies', on_delete=models.SET_NULL)
+
+    class Meta:
+        db_table = "comments"
+
+    def __str__(self):
+        return self.text
