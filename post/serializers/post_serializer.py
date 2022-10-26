@@ -10,7 +10,7 @@ class PostSerializer(ModelSerializer):
         model = Post
         fields = ('uuid', 'page', 'content')
 
-    def create(self, validated_data):
+    def create(self, validated_data: dict):
         post = Post.objects.create(
             page=validated_data['page'],
             content=validated_data['content'],

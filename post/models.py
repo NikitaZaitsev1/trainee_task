@@ -11,7 +11,7 @@ class Post(models.Model):
     page = models.ForeignKey(Page, on_delete=models.CASCADE, related_name='posts')
     content = models.CharField(max_length=180)
 
-    reply_to = models.ForeignKey('Post', on_delete=models.SET_NULL, null=True, blank=True,related_name='replies')
+    reply_to = models.ForeignKey('Post', on_delete=models.SET_NULL, null=True, blank=True, related_name='replies')
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -22,4 +22,3 @@ class Post(models.Model):
         db_table = "posts"
         verbose_name = "Post"
         verbose_name_plural = "Posts"
-

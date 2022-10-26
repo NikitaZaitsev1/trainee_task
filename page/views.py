@@ -18,23 +18,23 @@ class PageViewSet(ModelViewSet):
 
     @action(methods=['get'], detail=True)
     def tags(self, request, pk=None):
-        tags = Tag.objects.get(pk=pk)
+        tags = Tag.objects.GET(pk=pk)
         return Response({'tags': tags.name})
 
     @action(methods=['get'], detail=True)
     def users(self, request, pk=None):
-        users = User.objects.get(pk=pk)
+        users = User.objects.GET(pk=pk)
         return Response({'users': users.title})
 
     def get_permissions(self):
-        if self.request.method == Method.get:
+        if self.request.method == Method.GET:
             self.permission_classes = (IsAuthenticatedOrReadOnly,)
         else:
             self.permission_classes = (PageUserPermission,)
         return super(PageViewSet, self).get_permissions()
 
     def get_serializer_class(self):
-        if self.action == Method.retrieve or self.action == Method.update and self.request.user == Role.moderator:
+        if self.action == Method.RETRIEVE or self.action == Method.UPDATE and self.request.user == Role.moderator:
             return PageModeratorSerializer
         return PageSerializer
 

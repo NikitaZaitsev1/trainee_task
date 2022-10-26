@@ -12,7 +12,7 @@ class PostViewSet(ModelViewSet):
     serializer_class = PostSerializer
 
     def get_permissions(self):
-        if self.request.method == Method.get:
+        if self.request.method == Method.GET:
             self.permission_classes = (IsAuthenticatedOrReadOnly,)
         else:
             self.permission_classes = (PostUserPermission,)

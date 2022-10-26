@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 class MiddlewareAuthenticationJWT(MiddlewareMixin):
 
     def process_request(self, request):
-        if jwt_token := request.headers.get('authorization'):
+        if jwt_token := request.headers.GET('authorization'):
             try:
                 payload = jwt.decode(jwt_token, os.getenv('JWT_SECRET_KEY'), algorithms=[os.getenv('JWT_ALGORITHMS')])
                 useruuid = payload['user_uuid']

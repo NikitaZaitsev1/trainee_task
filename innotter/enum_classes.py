@@ -7,7 +7,7 @@ class Role(str, Enum):
 
 
 class Method(str, Enum):
-    get = 'GET'
-    retrieve = 'retrieve'
-    update = 'UPDATE'
-    delete = 'DELETE'
+    GET = 'GET'
+    RETRIEVE = 'retrieve'
+    UPDATE = 'UPDATE'
+    DELETE = 'DELETE'

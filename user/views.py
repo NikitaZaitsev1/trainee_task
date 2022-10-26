@@ -14,12 +14,12 @@ class UserViewSet(ModelViewSet):
     lookup_field = 'title'
 
     def get_serializer_class(self):
-        if self.action == Method.retrieve or self.action == Method.update:
+        if self.action == Method.RETRIEVE or self.action == Method.UPDATE:
             return AdminSerializer
         return UserSerializer
 
     def get_permissions(self):
-        if self.request.method == Method.get:
+        if self.request.method == Method.GET:
             self.permission_classes = (IsAdminUser,)
         else:
             self.permission_classes = (UserAdminPermission,)

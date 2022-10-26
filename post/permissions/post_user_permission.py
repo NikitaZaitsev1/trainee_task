@@ -10,7 +10,7 @@ class PostUserPermission(BasePermission):
         if request.method in SAFE_METHODS:
             return True
 
-        if request.method == Method.delete:
+        if request.method == Method.DELETE:
             return request.user.role in (Role.admin, Role.moderator)
 
         return obj.page.owner == request.user or request.user.role == Role.admin

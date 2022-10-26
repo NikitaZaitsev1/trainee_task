@@ -22,10 +22,10 @@ class UserSerializer(ModelSerializer):
         user = User.objects.create_user(
             username=validated_data['username'],
             email=validated_data['email'],
-            role=validated_data.get('role', 'User'),
+            role=validated_data.GET('role', 'User'),
             password=validated_data['password']
         )
-        image = validated_data.get('image_s3_path')
+        image = validated_data.GET('image_s3_path')
         if image is not None:
             AwsService().upload_to_s3(image, folder="user")
             user.image_s3_path = f"{settings.DEFAULT_AWS_STORAGE_URL}/user/{image.name}"
