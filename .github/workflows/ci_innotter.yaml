@@ -31,11 +31,6 @@ jobs:
       - name: Install dependencies
         run: |
           poetry install
-      - name: Coverage report
-        run: |
-          poetry add coverage
-          coverage run manage.py test
-          coverage report
       - name: Django Testing
         run: |
           python3 manage.py test
