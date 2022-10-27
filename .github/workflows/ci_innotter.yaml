@@ -1,0 +1,38 @@
+name: Django Tests
+
+on:
+  push:
+    branches:
+      - dev
+      - master
+
+  pull_request:
+    branches:
+      - dev
+      - master
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.10
+      - name: Install poetry
+        run: |
+          pip install poetry
+      - name: Install dependencies
+        run: |
+          poetry install
+      - name: Coverage report
+        run: |
+          poetry add coverage
+          coverage run manage.py test
+          coverage report
+      - name: Django Testing
+        run: |
+          python3 manage.py test
