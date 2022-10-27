@@ -30,7 +30,8 @@ jobs:
           pip install poetry
       - name: Install dependencies
         run: |
-          poetry install
+          poetry config virtualenvs.create false \
+            && poetry install --no-interaction --no-ansi
       - name: Django Testing
         run: |
           python3 manage.py test
