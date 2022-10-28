@@ -1,4 +1,4 @@
-FROM python:3.10
+FROM python:3.10 as base-image
 
 ENV PYTHONFAULTHANDLER=1 \
   PYTHONUNBUFFERED=1 \
@@ -28,3 +28,8 @@ ADD run_server.sh /run_server.sh
 ADD run_celery.sh /run_celery.sh
 RUN chmod a+x /run_server.sh /run_celery.sh
 COPY . app/
+
+#FROM base-image as test
+#run for testing
+#
+#FROM base-image as production

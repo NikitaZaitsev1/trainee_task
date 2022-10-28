@@ -20,10 +20,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - name: Config
-        run: rm ~/.docker/config.json
-      - name: Run docker-compose.yml
-        run: sudo docker-compose up -d
+      - name: Build the stack
+        run: sudo docker-compose -f docker-compose.test.yml up -d --build
       #      - name: Set up Python ${{ matrix.python-version }}
       #        uses: actions/setup-python@v4
       #        with:
