@@ -9,7 +9,7 @@ services:
       - .:/app
     entrypoint: /run_server.sh
     ports:
-      - "${secrets.WEB_PORTS}"
+      - "8000:8000"
     environment:
       - POSTGRES_NAME=${secrets.POSTGRES_DB}
       - POSTGRES_USER=${secrets.POSTGRES_USER}
