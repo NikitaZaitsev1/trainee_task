@@ -9,7 +9,7 @@ services:
       - .:/app
     entrypoint: /run_server.sh
     ports:
-      - "${WEB_PORTS}"
+      - "8000:8000"
     environment:
       - POSTGRES_NAME=${POSTGRES_DB}
       - POSTGRES_USER=${POSTGRES_USER}
@@ -27,7 +27,7 @@ services:
     volumes:
       - postgres:/data/postgres
     ports:
-      - "${POSTGRES_PORTS}"
+      - "54321:5432"
     restart: unless-stopped
 
   rabbitmq:
