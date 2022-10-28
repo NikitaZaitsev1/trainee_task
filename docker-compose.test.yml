@@ -4,10 +4,10 @@ services:
   app:
     build:
       context: ./
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile_test
     volumes:
       - .:/app
-    entrypoint: /run_server.sh
+    entrypoint: /run_tests.sh
     ports:
       - "8000:8000"
     environment:

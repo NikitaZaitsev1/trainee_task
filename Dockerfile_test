@@ -1,0 +1,4 @@
+FROM base-image as test
+
+ADD run_tests.sh /run_tests.sh
+RUN chmod a+x /run_tests.sh
