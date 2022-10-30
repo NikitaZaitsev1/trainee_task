@@ -1,6 +1,11 @@
 name: Django Tests
 
 on:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
   push:
     branches:
       - dev
@@ -13,15 +18,16 @@ on:
 
 jobs:
   build:
+    environment: $ {{ input.environment }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - name: Build the stack with tests
-        environment:
-          POSTGRES_NAME: ${{ secrets.POSTGRES_DB }}
-          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-          DEBUG: ${{ secrets.DEBUG }}
-          SERVER_NAMES: ${{ secrets.SERVER_NAMES }}
-          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+#      - environment:
+#          POSTGRES_NAME: ${{ secrets.POSTGRES_DB }}
+#          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+#          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+#          DEBUG: ${{ secrets.DEBUG }}
+#          SERVER_NAMES: ${{ secrets.SERVER_NAMES }}
+#          SECRET_KEY: ${{ secrets.SECRET_KEY }}
         run: sudo docker-compose -f ./docker-compose.test.yml up
