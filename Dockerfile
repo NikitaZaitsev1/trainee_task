@@ -30,7 +30,7 @@ RUN chmod a+x /run_server.sh /run_celery.sh
 COPY . app/
 
 #FROM base-image as test
-#ADD run_migr.sh /run_migr.sh
-#RUN chmod a+x /run_migr.sh
+#ADD run_tests.sh /run_tests.sh
+#RUN chmod a+x /run_tests.sh
 #
 #FROM base-image as production

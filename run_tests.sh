@@ -1,4 +1,14 @@
 #!/bin/sh
 
+echo "Waiting for db..."
 
-python manage.py test || exit 1
+
+while ! nc -z db 5432; do
+  sleep 0.1
+done
+
+echo "DB started"
+
+python manage.py makemigrations
+python manage.py migrate
+python manage.py test
