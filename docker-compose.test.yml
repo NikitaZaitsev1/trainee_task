@@ -23,9 +23,9 @@ services:
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      PGDATA: /var/run/postgresql/
+      PGDATA: /var/lib/postgresql/data
     volumes:
-      - postgres:/var/run/postgresql/
+      - postgres:/var/lib/postgresql/data
     ports:
       - "54321:5432"
     restart: unless-stopped
