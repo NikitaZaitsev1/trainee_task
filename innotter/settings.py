@@ -25,10 +25,11 @@ load_dotenv()
 SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = int(os.getenv("DEBUG", 0))
+# DEBUG = int(os.getenv("DEBUG", 0))
+DEBUG = 1
 
-ALLOWED_HOSTS = os.environ.get('SERVER_NAMES').split(' ')
-
+# ALLOWED_HOSTS = os.environ.get('SERVER_NAMES').split(' ')
+ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
