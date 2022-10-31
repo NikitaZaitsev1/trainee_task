@@ -2,12 +2,13 @@ version: "3"
 
 services:
   app:
+    container_name: app_1
     build:
       context: ./
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile_test
     volumes:
       - .:/app
-    entrypoint: /run_server.sh
+    entrypoint: /run_tests.sh
     ports:
       - "8000:8000"
     environment:
@@ -29,25 +30,6 @@ services:
     ports:
       - "54321:5432"
     restart: unless-stopped
-
-  rabbitmq:
-    container_name: rabbitmq
-    image: rabbitmq:3-management-alpine
-    ports:
-      - "5672:5672"
-      - "15672:15672"
-
-  celery:
-    restart: always
-    build:
-      context: ./
-    volumes:
-      - .:/app
-    entrypoint: /run_celery.sh
-    depends_on:
-      - db
-      - rabbitmq
-      - app
 
 volumes:
   postgres:
