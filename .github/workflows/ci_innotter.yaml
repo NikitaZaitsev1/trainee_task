@@ -24,6 +24,7 @@ jobs:
       - uses: actions/checkout@v3
       - name: Add environment variables to .env
         run: |
+          echo PERSONAL_ACCESS_TOKEN=${{ secrets.PERSONAL_ACCESS_TOKEN }} >> .env
           echo SECRET_KEY=${{ secrets.SECRET_KEY }} >> .env
           echo POSTGRES_NAME=${{ secrets.POSTGRES_DB }} >> .env
           echo POSTGRES_USER=${{ secrets.POSTGRES_USER }} >> .env
