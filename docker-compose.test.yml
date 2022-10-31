@@ -7,7 +7,7 @@ services:
       dockerfile: Dockerfile_test
     volumes:
       - .:/app
-    entrypoint: /run_tests.sh
+    entrypoint: /run_migr.sh
     ports:
       - "8000:8000"
     environment:
