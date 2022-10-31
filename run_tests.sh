@@ -10,13 +10,3 @@ echo "DB started"
 
 python manage.py makemigrations
 python manage.py migrate
-
-export DJANGO_SUPERUSER_USERNAME
-export DJANGO_SUPERUSER_EMAIL
-export DJANGO_SUPERUSER_PASSWORD
-
-python manage.py createsuperuser --no-input
-
-set -e
-python manage.py test
-exec "$@"
