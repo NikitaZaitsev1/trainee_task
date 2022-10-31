@@ -40,4 +40,6 @@ jobs:
       - name: Build the stack with tests
         run: sudo docker-compose -f ./docker-compose.test.yml up -d
       - name: Run Tests
-        run: docker-compose run --rm app sh -c "python manage.py test"
+        working-directory: ./app
+        run: python manage.py test
+#        run: docker-compose run --rm app sh -c "python manage.py test"
