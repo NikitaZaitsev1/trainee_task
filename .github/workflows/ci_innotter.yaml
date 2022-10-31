@@ -24,5 +24,18 @@ jobs:
           echo POSTGRES_HOST=${{ secrets.POSTGRES_HOST }} >> .env
           echo DEBUG=${{ secrets.DEBUG }} >> .env
           echo SERVER_NAMES=${{ secrets.SERVER_NAMES }} >> .env
+          echo DJANGO_SUPERUSER_USERNAME=${{ secrets.DJANGO_SUPERUSER_USERNAME }} >> .env
+          echo DJANGO_SUPERUSER_EMAIL=${{ secrets.DJANGO_SUPERUSER_EMAIL }} >> .env
+          echo POSTGRES_USER=${{ secrets.POSTGRES_USER }} >> .env
+          echo DJANGO_SUPERUSER_PASSWORD=${{ secrets.DJANGO_SUPERUSER_PASSWORD }} >> .env
+          echo JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }} >> .env
+          echo JWT_ALGORITHMS=${{ secrets.JWT_ALGORITHMS }} >> .env
+          echo AWS_S3_REGION_NAME=${{ secrets.AWS_S3_REGION_NAME }} >> .env
+          echo AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }} >> .env
+          echo AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }} >> .env
+          echo AWS_STORAGE_BUCKET_NAME=${{ secrets.AWS_STORAGE_BUCKET_NAME }} >> .env
+          echo DEFAULT_AWS_STORAGE_URL=${{ secrets.DEFAULT_AWS_STORAGE_URL }} >> .env
+          echo CELERY_BROKER_URL=${{ secrets.CELERY_BROKER_URL }} >> .env
+          echo ADMIN_EMAIL=${{ secrets.ADMIN_EMAIL }} >> .env
       - name: Build the stack with tests
         run: sudo docker-compose -f ./docker-compose.test.yml up
