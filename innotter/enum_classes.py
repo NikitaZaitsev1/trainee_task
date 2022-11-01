@@ -2,12 +2,18 @@ from enum import Enum
 
 
 class Role(str, Enum):
-    admin = 'admin'
-    moderator = 'moderator'
+    ADMIN = 'admin'
+    MODERATOR = 'moderator'
+    USER = 'user'
 
 
 class Method(str, Enum):
     GET = 'GET'
-    RETRIEVE = 'retrieve'
-    UPDATE = 'UPDATE'
+    PUT = 'PUT'
+    PATCH = 'PATCH'
     DELETE = 'DELETE'
+    LIST = 'list'
+    CREATE = 'create'
+    RETRIEVE = 'retrieve'
+    UPDATE = 'update'
+    PARTIAL_UPDATE = 'partial_update'

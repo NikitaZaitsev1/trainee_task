@@ -7,11 +7,19 @@ from post.permissions.comment_permissions import CommentUserPermission
 from post.permissions.post_user_permission import PostUserPermission
 from post.serializers.comment_serializer import CommentSerializer
 from post.serializers.post_serializer import PostSerializer
+from post.serializers.post_serializer_get import PostSerializerGet
+from post.serializers.post_serializer_update import PostSerializerUpdate
 
 
 class PostViewSet(ModelViewSet):
     queryset = Post.objects.all()
-    serializer_class = PostSerializer
+
+    def get_serializer_class(self):
+        if self.action == Method.LIST:
+            return PostSerializerGet
+        if self.action == Method.UPDATE or self.action == Method.PARTIAL_UPDATE:
+            return PostSerializerUpdate
+        return PostSerializer
 
     def get_permissions(self):
         if self.request.method == Method.GET:

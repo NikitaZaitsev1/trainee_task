@@ -11,6 +11,6 @@ class CommentUserPermission(BasePermission):
             return True
 
         if request.method == Method.DELETE:
-            return request.user.role in (Role.admin, Role.moderator)
+            return request.user.role in (Role.ADMIN, Role.MODERATOR)
 
-        return obj.comment_author == request.user or request.user.role == Role.admin
+        return obj.comment_author == request.user or request.user.role == Role.ADMIN

@@ -11,7 +11,7 @@ class PageSerializer(ModelSerializer):
 
     class Meta:
         model = Page
-        fields = ('uuid', 'name', 'description', 'tags', 'owner', 'followers', 'image')
+        fields = ('uuid', 'name', 'description', 'tags', 'owner', 'followers', 'image', 'is_private')
 
     def create(self, validated_data):
         page = Page.objects.create(

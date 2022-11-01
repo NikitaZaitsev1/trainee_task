@@ -8,12 +8,13 @@ from post.tasks import send_notification_email
 class PostSerializer(ModelSerializer):
     class Meta:
         model = Post
-        fields = ('uuid', 'page', 'content')
+        fields = ('uuid', 'page', 'content', 'likes')
 
     def create(self, validated_data: dict):
         post = Post.objects.create(
             page=validated_data['page'],
             content=validated_data['content'],
+            likes=validated_data['likes']
         )
 
         post.save()
