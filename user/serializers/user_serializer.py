@@ -23,7 +23,9 @@ class UserSerializer(ModelSerializer):
             username=validated_data['username'],
             email=validated_data['email'],
             role=validated_data.get('role', 'User'),
-            password=validated_data['password']
+            title=validated_data['title'],
+            password=validated_data['password'],
+
         )
         image = validated_data.get('image_s3_path')
         if image is not None:
