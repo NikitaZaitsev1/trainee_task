@@ -1,3 +1,4 @@
+from typing import List
 from uuid import uuid4
 
 from django.db import models
@@ -13,7 +14,6 @@ class Post(models.Model):
     reply_to = models.ForeignKey('Post', on_delete=models.SET_NULL, null=True, blank=True, related_name='replies')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    likes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='page_posts')
 
     class Meta:
         db_table = "posts"
@@ -22,6 +22,16 @@ class Post(models.Model):
 
     def __str__(self):
         return self.content
+
+
+class Like(models.Model):
+    uuid = models.CharField(primary_key=True, max_length=255, unique=True, default=uuid4, editable=False)
+    like_user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_like')
+    value = models.IntegerField(default=1, editable=False)
+
+    class Meta:
+        db_table = "likes"
 
 
 class Comment(models.Model):
