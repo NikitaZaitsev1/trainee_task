@@ -17,3 +17,10 @@ class Method(str, Enum):
     RETRIEVE = 'retrieve'
     UPDATE = 'update'
     PARTIAL_UPDATE = 'partial_update'
+
+
+class Action(str, Enum):
+    CREATE_PAGE = 'create page'
+    CREATE_POST = 'create post'
+    CREATE_LIKE = 'create like'
+

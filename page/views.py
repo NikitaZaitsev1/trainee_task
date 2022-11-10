@@ -3,7 +3,9 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAdminUser
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
-from innotter.enum_classes import Method, Role
+from innotter.enum_classes import Method, Role, Action
+from innotter.producer import publish
+from innotter.pydantic_models import Stats
 from page.models import Page, Tag
 from page.permissions.page_user_permission import PageUserPermission
 from page.serializers.page_serializer_moderator import PageModeratorSerializer
@@ -39,6 +41,11 @@ class PageViewSet(ModelViewSet):
         else:
             self.permission_classes = (PageUserPermission,)
         return super(PageViewSet, self).get_permissions()
+
+    def perform_create(self, serializer):
+        stats = Stats(user_id=self.request.user.uuid, action=Action.CREATE_PAGE)
+        publish(stats.json())
+        serializer.save(owner=self.request.user)
 
 
 class TagViewSet(ModelViewSet):
